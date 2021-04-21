@@ -4,10 +4,7 @@ package br.uniso.apibd.controller;
 import br.uniso.apibd.model.entity.Aluno;
 import br.uniso.apibd.model.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,7 +32,6 @@ public class AlunoController {
         }
     }
 
-
     // criar um endpoint para ler do banco
 
     @GetMapping("/alunos")
@@ -44,5 +40,27 @@ public class AlunoController {
     }
 
 
+
+    @GetMapping("/alunos/ra")
+    public Aluno listarAlunoPorRa(@RequestParam int ra){
+        Aluno retornado = repository.findAlunoByRa(ra);
+
+        return retornado;
+    }
+
+
+
+    @GetMapping("/alunos/nome")
+    public Aluno listarAlunoPorNome(@RequestParam String nome, @RequestParam String curso){
+        Aluno retornado = repository.findAlunoByNomeAndCurso(nome, curso);
+        return retornado;
+    }
+
+
+    @GetMapping("/alunos/idadeCurso")
+    public List<Aluno> listarAlunoPorIdadeCurso(@RequestParam int idade, @RequestParam String curso){
+        List<Aluno> alunos = repository.findAlunoByIdadeOrCurso(idade, curso);
+        return alunos;
+    }
 
 }
